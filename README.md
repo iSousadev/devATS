@@ -339,21 +339,8 @@ Pré-condições:
 - PDFs escaneados/imagem podem falhar no parse.
 - O sistema retorna erro indicando ausência de texto extraível.
 
----
-
-## 🔒 Segurança e boas práticas
-
-- Nunca versionar `.env` com segredos.
-- Usar RLS no Supabase (já previsto no schema).
-- Preferir chave `service_role` apenas no backend (nunca no frontend).
-
----
-
-## 📈 Próximos passos sugeridos
-
-- Adicionar pipeline CI (lint + build frontend + checagens backend)
-- Implementar testes automatizados para rotas FastAPI
-- Incluir upload do DOCX final em storage e versionamento de currículo
+### Estado de BETA 
+v 0.1.0
 
 ---
 
