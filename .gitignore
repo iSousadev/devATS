@@ -1,0 +1,40 @@
+# ─── Dependências ────────────────────────────────────────────────
+node_modules/
+
+# ─── Variáveis de ambiente / segredos ────────────────────────────
+.env
+.env.*
+!.env.example
+
+# ─── Python ──────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+*.egg-info/
+dist/
+build/
+
+# ─── Arquivos temporários do backend ─────────────────────────────
+backend/tmp_*.docx
+*.tmp
+
+# ─── Next.js ─────────────────────────────────────────────────────
+frontend/.next/
+frontend/out/
+frontend/tsconfig.tsbuildinfo
+
+# ─── Sistema operacional ─────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ─── Documentação interna ────────────────────────────────────────
+_codex/
+
+# ─── Editores / IDEs ─────────────────────────────────────────────
+.agents/
+
+# ─── Logs ────────────────────────────────────────────────────────
+*.log
+npm-debug.log*
