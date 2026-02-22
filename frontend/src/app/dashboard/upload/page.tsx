@@ -82,38 +82,55 @@ export default function UploadPage() {
 
   return (
     <div className="max-w-4xl mx-auto space-y-8">
-      {/* Stepper */}
+      {/* Stepper — compacto em mobile, expandido em md+ */}
       <div className="flex items-center gap-2">
-        {STEP_LABELS.map((label, i) => (
-          <div key={i} className="flex items-center gap-2">
-            <div
-              className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold transition-colors ${
-                i === step
-                  ? "bg-blue-600 text-white"
-                  : i < step
-                    ? "bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300"
-                    : "bg-muted text-muted-foreground"
-              }`}
-            >
-              {i < step ? "✓" : i + 1}
-            </div>
-            <span
-              className={`text-sm font-medium hidden md:block ${i === step ? "text-foreground" : "text-muted-foreground"}`}
-            >
-              {label}
-            </span>
-            {i < STEP_LABELS.length - 1 && (
-              <div className="w-8 h-px bg-border mx-1" />
-            )}
+        {/* Mobile: indicador textual */}
+        <div className="flex md:hidden items-center gap-2">
+          <div className="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold bg-blue-600 text-white">
+            {step < STEP_LABELS.length - 1 ? step + 1 : "✓"}
           </div>
-        ))}
+          <span className="text-sm font-medium">
+            {STEP_LABELS[step]}
+            <span className="text-muted-foreground ml-1">
+              ({step + 1}/{STEP_LABELS.length})
+            </span>
+          </span>
+        </div>
+        {/* Desktop: todos os steps */}
+        <div className="hidden md:flex items-center gap-2">
+          {STEP_LABELS.map((label, i) => (
+            <div key={i} className="flex items-center gap-2">
+              <div
+                className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold transition-colors ${
+                  i === step
+                    ? "bg-blue-600 text-white"
+                    : i < step
+                      ? "bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300"
+                      : "bg-muted text-muted-foreground"
+                }`}
+              >
+                {i < step ? "✓" : i + 1}
+              </div>
+              <span
+                className={`text-sm font-medium ${i === step ? "text-foreground" : "text-muted-foreground"}`}
+              >
+                {label}
+              </span>
+              {i < STEP_LABELS.length - 1 && (
+                <div className="w-8 h-px bg-border mx-1" />
+              )}
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* Step 0: Upload */}
       {step === 0 && (
         <div className="space-y-4">
           <div>
-            <h1 className="text-3xl font-bold">Adaptar Currículo</h1>
+            <h1 className="text-2xl sm:text-3xl font-bold">
+              Adaptar Currículo
+            </h1>
             <p className="text-muted-foreground mt-1">
               Faça upload do seu currículo atual. Pode ter colunas, foto,
               gráficos — nossa IA extrai tudo.
@@ -127,13 +144,15 @@ export default function UploadPage() {
       {step === 1 && resumeData && (
         <div className="space-y-6">
           <div>
-            <h1 className="text-3xl font-bold">Revisar Dados Extraídos</h1>
+            <h1 className="text-2xl sm:text-3xl font-bold">
+              Revisar Dados Extraídos
+            </h1>
             <p className="text-muted-foreground mt-1">
               Confira se a IA extraiu tudo corretamente.
             </p>
           </div>
           <ResumePreview data={resumeData} />
-          <div className="flex gap-3">
+          <div className="flex flex-wrap gap-3">
             <Button variant="outline" onClick={() => setStep(0)}>
               Voltar
             </Button>
@@ -148,14 +167,16 @@ export default function UploadPage() {
       {step === 2 && (
         <div className="space-y-6">
           <div>
-            <h1 className="text-3xl font-bold">Escolher Template</h1>
+            <h1 className="text-2xl sm:text-3xl font-bold">
+              Escolher Template
+            </h1>
             <p className="text-muted-foreground mt-1">
               Todos os templates são 100% ATS-friendly: 1 coluna, sem foto, sem
               gráficos.
             </p>
           </div>
           <TemplateSelector value={templateId} onChange={setTemplateId} />
-          <div className="flex gap-3">
+          <div className="flex flex-wrap gap-3">
             <Button variant="outline" onClick={() => setStep(1)}>
               Voltar
             </Button>
@@ -178,7 +199,7 @@ export default function UploadPage() {
           <p className="text-muted-foreground">
             O download do DOCX começou automaticamente.
           </p>
-          <div className="flex gap-3 justify-center mt-6">
+          <div className="flex flex-wrap gap-3 justify-center mt-6">
             <Button variant="outline" onClick={() => router.push("/dashboard")}>
               Ver meus currículos
             </Button>

@@ -23,7 +23,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR" className="dark">
-      <body className={`${spaceGrotesk.variable} antialiased`}>
+      <body
+        className={`${spaceGrotesk.variable} antialiased overflow-x-hidden`}
+      >
         {children}
         <Toaster position="top-right" options={{ autopilot: true }} />
       </body>

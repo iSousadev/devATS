@@ -80,7 +80,7 @@ export function FileUploader({ onSuccess }: FileUploaderProps) {
       <div
         {...getRootProps()}
         className={`
-          border-2 border-dashed rounded-xl p-12 text-center cursor-pointer transition-all
+          border-2 border-dashed rounded-xl p-6 sm:p-12 text-center cursor-pointer transition-all
           ${isDragActive ? "border-blue-500 bg-blue-50 dark:bg-blue-950" : "border-muted-foreground/30 hover:border-muted-foreground/60"}
           ${isLoading ? "opacity-60 cursor-not-allowed" : ""}
         `}
@@ -108,7 +108,7 @@ export function FileUploader({ onSuccess }: FileUploaderProps) {
                 strokeLinejoin="round"
               />
             </svg>
-            <p className="text-lg font-medium">
+            <p className="text-base sm:text-lg font-medium">
               {isDragActive
                 ? "Solte o arquivo aqui"
                 : "Arraste seu currículo ou clique para selecionar"}

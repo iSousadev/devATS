@@ -21,16 +21,18 @@ export function ResumePreview({ data }: ResumePreviewProps) {
   } = data;
 
   return (
-    <div className="space-y-6 text-sm font-mono bg-white dark:bg-zinc-900 rounded-xl border p-8 shadow-sm">
+    <div className="space-y-6 text-sm font-mono bg-white dark:bg-zinc-900 rounded-xl border p-4 sm:p-8 shadow-sm">
       {/* Header */}
       <div>
-        <h2 className="text-2xl font-bold">{p.full_name}</h2>
+        <h2 className="text-xl sm:text-2xl font-bold">{p.full_name}</h2>
         <div className="text-muted-foreground mt-1 space-y-0.5">
           {p.email && <div>Email: {p.email}</div>}
           {p.phone && <div>Telefone: {p.phone}</div>}
           {p.location && <div>Local: {p.location}</div>}
-          {p.linkedin && <div>LinkedIn: {p.linkedin}</div>}
-          {p.github && <div>GitHub: {p.github}</div>}
+          {p.linkedin && (
+            <div className="break-all">LinkedIn: {p.linkedin}</div>
+          )}
+          {p.github && <div className="break-all">GitHub: {p.github}</div>}
         </div>
       </div>
 

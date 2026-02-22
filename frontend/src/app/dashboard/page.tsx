@@ -152,14 +152,14 @@ export default function DashboardPage() {
 
   return (
     <div className="space-y-8">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Meus Currículos</h1>
           <p className="text-muted-foreground mt-1">
             Gerencie seus currículos.
           </p>
         </div>
-        <div className="flex gap-3">
+        <div className="flex flex-col sm:flex-row flex-wrap gap-3">
           <Button asChild variant="outline">
             <Link href="/dashboard/create">Criar do Zero</Link>
           </Button>
@@ -170,16 +170,12 @@ export default function DashboardPage() {
       </div>
 
       {loading ? (
-        <div className="text-center py-20 text-muted-foreground">
-          Carregando...
-        </div>
-      ) : resumes.length === 0 ? (
         <div className="text-center py-20 border-2 border-dashed rounded-xl">
           <p className="text-xl font-medium mb-2">Nenhum currículo ainda</p>
           <p className="text-muted-foreground mb-6">
             Adapte seu currículo atual ou crie um do zero.
           </p>
-          <div className="flex gap-3 justify-center">
+          <div className="flex flex-wrap gap-3 justify-center">
             <Button asChild variant="outline">
               <Link href="/dashboard/create">Criar do Zero</Link>
             </Button>
@@ -220,7 +216,7 @@ export default function DashboardPage() {
                       Ver Detalhes
                     </Button>
                   </DialogTrigger>
-                  <DialogContent className="max-w-3xl max-h-[80vh] overflow-y-auto">
+                  <DialogContent className="max-w-[95vw] sm:max-w-2xl md:max-w-3xl max-h-[80vh] overflow-y-auto">
                     <DialogHeader>
                       <DialogTitle>{selectedResume?.title}</DialogTitle>
                       <DialogDescription>
@@ -239,7 +235,7 @@ export default function DashboardPage() {
                           <h3 className="font-semibold mb-2 text-lg">
                             📋 Informações Pessoais
                           </h3>
-                          <div className="grid grid-cols-2 gap-2 text-sm">
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
                             {selectedResume.data.personal_info?.full_name && (
                               <p>
                                 <strong>Nome:</strong>{" "}

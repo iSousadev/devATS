@@ -71,7 +71,7 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
       <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
 
       {/* Modal */}
-      <div className="relative w-full max-w-2xl rounded-2xl border border-white/10 bg-[#111111] shadow-2xl shadow-black/50 animate-[scaleIn_0.3s_ease-out]">
+      <div className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-2xl border border-white/10 bg-[#111111] shadow-2xl shadow-black/50 animate-[scaleIn_0.3s_ease-out]">
         {/* Close button */}
         <button
           onClick={onClose}
@@ -82,7 +82,7 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
         </button>
 
         {/* Header */}
-        <div className="relative overflow-hidden rounded-t-2xl border-b border-white/10 px-8 py-8">
+        <div className="relative overflow-hidden rounded-t-2xl border-b border-white/10 px-4 sm:px-8 py-6 sm:py-8">
           <div className="absolute inset-0 bg-linear-to-br from-emerald-500/10 via-transparent to-purple-500/10" />
           <div className="relative">
             <span className="mb-2 inline-block rounded-full bg-emerald-500/10 px-3 py-1 text-xs font-medium text-emerald-400 border border-emerald-500/20">
@@ -98,7 +98,7 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
         </div>
 
         {/* Steps */}
-        <div className="px-8 py-6 space-y-1">
+        <div className="px-4 sm:px-8 py-6 space-y-1">
           {steps.map((step, idx) => (
             <div key={idx} className="flex gap-4 items-start group">
               {/* Timeline */}
@@ -128,7 +128,7 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
         </div>
 
         {/* Preview mockup */}
-        <div className="mx-8 mb-6 rounded-xl border border-white/10 bg-white/5 p-4">
+        <div className="mx-4 sm:mx-8 mb-6 rounded-xl border border-white/10 bg-white/5 p-4">
           <div className="flex items-center gap-2 mb-3">
             <div className="h-3 w-3 rounded-full bg-red-500/60" />
             <div className="h-3 w-3 rounded-full bg-yellow-500/60" />
@@ -149,7 +149,7 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
         </div>
 
         {/* Footer */}
-        <div className="flex items-center justify-between rounded-b-2xl border-t border-white/10 px-8 py-5 bg-white/2">
+        <div className="flex flex-wrap items-center justify-between gap-3 rounded-b-2xl border-t border-white/10 px-4 sm:px-8 py-5 bg-white/2">
           <p className="text-xs text-white/30">
             Grátis para começar · Sem cartão de crédito
           </p>

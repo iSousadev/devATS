@@ -214,31 +214,48 @@ export default function CreatePage() {
 
   return (
     <div className="max-w-2xl mx-auto space-y-8">
-      {/* Stepper */}
-      <div className="flex items-center gap-1 flex-wrap">
-        {STEPS.map((label, i) => (
-          <div key={i} className="flex items-center gap-1">
-            <div
-              className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold shrink-0 ${
-                i === step
-                  ? "bg-blue-600 text-white"
-                  : i < step
-                    ? "bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300"
-                    : "bg-muted text-muted-foreground"
-              }`}
-            >
-              {i < step ? "✓" : i + 1}
-            </div>
-            <span
-              className={`text-xs font-medium ${i === step ? "" : "text-muted-foreground"}`}
-            >
-              {label}
-            </span>
-            {i < STEPS.length - 1 && (
-              <div className="w-4 h-px bg-border mx-0.5" />
-            )}
+      {/* Stepper — compacto em mobile, expandido em sm+ */}
+      <div className="flex items-center gap-1">
+        {/* Mobile: indicador textual */}
+        <div className="flex sm:hidden items-center gap-2">
+          <div
+            className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold shrink-0 bg-blue-600 text-white`}
+          >
+            {step < STEPS.length - 1 ? step + 1 : "✓"}
           </div>
-        ))}
+          <span className="text-sm font-medium">
+            {STEPS[step]}
+            <span className="text-muted-foreground ml-1">
+              ({step + 1}/{STEPS.length})
+            </span>
+          </span>
+        </div>
+        {/* Desktop: todos os steps */}
+        <div className="hidden sm:flex items-center gap-1 flex-wrap">
+          {STEPS.map((label, i) => (
+            <div key={i} className="flex items-center gap-1">
+              <div
+                className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold shrink-0 ${
+                  i === step
+                    ? "bg-blue-600 text-white"
+                    : i < step
+                      ? "bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300"
+                      : "bg-muted text-muted-foreground"
+                }`}
+              >
+                {i < step ? "✓" : i + 1}
+              </div>
+              <span
+                className={`text-xs font-medium ${i === step ? "" : "text-muted-foreground"}`}
+              >
+                {label}
+              </span>
+              {i < STEPS.length - 1 && (
+                <div className="w-4 h-px bg-border mx-0.5" />
+              )}
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* Step 0: Dados Pessoais */}
@@ -327,7 +344,7 @@ export default function CreatePage() {
               {...summary.register("soft")}
             />
           </div>
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
             <Button type="button" variant="outline" onClick={() => setStep(0)}>
               Voltar
             </Button>
@@ -369,7 +386,7 @@ export default function CreatePage() {
               setExperiences([...experiences, d]);
               exp.reset();
             })}
-            className="space-y-4 border rounded-xl p-5"
+            className="space-y-4 border rounded-xl p-3 sm:p-5"
           >
             <p className="font-medium text-sm text-muted-foreground">
               Adicionar experiência
@@ -415,7 +432,7 @@ export default function CreatePage() {
             </Button>
           </form>
 
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
             <Button variant="outline" onClick={() => setStep(1)}>
               Voltar
             </Button>
@@ -457,7 +474,7 @@ export default function CreatePage() {
               setEducations([...educations, d]);
               edu.reset();
             })}
-            className="space-y-4 border rounded-xl p-5"
+            className="space-y-4 border rounded-xl p-3 sm:p-5"
           >
             <p className="font-medium text-sm text-muted-foreground">
               Adicionar formação
@@ -488,7 +505,7 @@ export default function CreatePage() {
             </Button>
           </form>
 
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
             <Button variant="outline" onClick={() => setStep(2)}>
               Voltar
             </Button>
@@ -519,7 +536,7 @@ export default function CreatePage() {
             </Alert>
           )}
 
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
             <Button variant="outline" onClick={() => setStep(3)}>
               Voltar
             </Button>

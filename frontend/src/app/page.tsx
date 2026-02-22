@@ -1,25 +1,27 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowRight, Code, Lock, Terminal } from "lucide-react";
+import { ArrowRight, Code, Lock, Terminal, Menu, X } from "lucide-react";
 import Link from "next/link";
 import DemoModal from "@/components/DemoModal";
 
 export default function Home() {
   const [demoOpen, setDemoOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
     <div className="bg-[#0a0a0a] font-display text-slate-100 overflow-x-hidden">
       {/* Navbar */}
       <nav className="fixed top-4 left-0 right-0 mx-auto z-50 w-[90%] max-w-175 animate-[fadeSlideDown_0.5s_ease-out]">
-        <div className="flex h-12 items-center justify-between rounded-full border border-white/10 bg-white/5 px-5 backdrop-blur-xl">
+        <div className="flex h-12 items-center justify-between rounded-full border border-white/10 bg-white/5 px-4 sm:px-5 backdrop-blur-xl">
           <div className="flex items-center gap-2">
             <Terminal className="h-5 w-5 text-white/80" />
             <span className="text-xl font-semibold tracking-tight text-white">
               DevATS
             </span>
           </div>
-          <div className="flex items-center gap-6">
+          {/* Links desktop */}
+          <div className="hidden sm:flex items-center gap-3 sm:gap-6">
             <Link
               href="/login"
               className="text-sm font-medium text-slate-300 transition-colors hover:text-white"
@@ -33,11 +35,42 @@ export default function Home() {
               Criar Conta
             </Link>
           </div>
+          {/* Hamburger mobile */}
+          <button
+            onClick={() => setMobileMenuOpen((v) => !v)}
+            className="sm:hidden flex items-center justify-center w-8 h-8 rounded-full text-slate-400 hover:text-white hover:bg-white/10 transition-colors"
+            aria-label="Abrir menu"
+          >
+            {mobileMenuOpen ? (
+              <X className="h-5 w-5" />
+            ) : (
+              <Menu className="h-5 w-5" />
+            )}
+          </button>
         </div>
+        {/* Dropdown mobile */}
+        {mobileMenuOpen && (
+          <div className="sm:hidden mt-2 rounded-2xl border border-white/10 bg-[#111] backdrop-blur-xl shadow-xl shadow-black/40 overflow-hidden">
+            <Link
+              href="/login"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block px-5 py-3.5 text-sm font-medium text-slate-400 hover:text-white hover:bg-white/5 transition-colors border-b border-white/5"
+            >
+              Login
+            </Link>
+            <Link
+              href="/register"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block px-5 py-3.5 text-sm font-medium text-slate-400 hover:text-white hover:bg-white/5 transition-colors"
+            >
+              Criar Conta
+            </Link>
+          </div>
+        )}
       </nav>
 
       {/* Hero Section */}
-      <main className="relative min-h-screen w-full flex flex-col justify-center overflow-hidden pt-20">
+      <main className="relative min-h-screen w-full flex flex-col justify-center overflow-hidden pt-20 overflow-x-hidden">
         {/* Background Elements */}
         <div className="absolute inset-0 z-0 bg-grid pointer-events-none" />
         <div className="absolute inset-0 z-0 hero-glow pointer-events-none" />
@@ -94,12 +127,12 @@ export default function Home() {
               style={{ perspective: "1000px" }}
             >
               {/* Resume Card Container */}
-              <div className="relative w-full max-w-125">
+              <div className="relative w-full max-w-sm sm:max-w-md lg:max-w-125">
                 {/* Glow behind the card */}
                 <div className="absolute -inset-4 bg-linear-to-r from-brand/30 to-purple-600/20 rounded-2xl blur-2xl opacity-50 z-0" />
 
                 {/* Resume Document */}
-                <div className="bg-[#161616] text-slate-900 rounded-lg shadow-2xl overflow-hidden transform -rotate-2 transition-transform hover:rotate-0 duration-500 origin-bottom-right h-150 flex flex-col relative z-10 border border-slate-800">
+                <div className="bg-[#161616] text-slate-900 rounded-lg shadow-2xl overflow-hidden transform -rotate-2 transition-transform hover:rotate-0 duration-500 origin-bottom-right h-96 sm:h-[30rem] lg:h-150 flex flex-col relative z-10 border border-slate-800">
                   {/* Window Header Bar */}
                   <div className="flex items-center justify-between border-b border-slate-800 bg-[#161616] px-4 py-3">
                     <div className="flex items-center gap-2">
