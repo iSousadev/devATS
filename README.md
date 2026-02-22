@@ -1,86 +1,107 @@
-# DevATS
+# DevATS Hacheando o Sistema
 
-Sistema full stack para transformar currículos em formatos ATS-friendly usando IA (Gemini), com autenticação e persistência no Supabase.
+> Transforme currículos em documentos ATS-friendly com IA — em segundos.
 
-## 📌 Visão geral
-
-O DevATS permite dois fluxos principais:
-
-1. **Adaptar currículo existente** (PDF/DOCX)
-   - Faz upload do arquivo
-   - Extrai texto
-   - Estrutura os dados com IA
-   - Permite revisão
-   - Gera e baixa um DOCX ATS-friendly
-
-2. **Criar currículo do zero**
-   - Preenche formulário em múltiplas etapas
-   - Seleciona template
-   - Gera e baixa DOCX
-
-Além disso, o usuário autenticado pode salvar e gerenciar currículos no dashboard.
+DevATS é um projeto pessoal full stack que usa o **Google Gemini** para extrair, estruturar e gerar currículos otimizados para sistemas de triagem automatizada (ATS). O usuário pode tanto adaptar um currículo existente quanto criar um do zero, com download direto em `.docx`.
 
 ---
 
-## 🧱 Arquitetura
+## ✨ Funcionalidades
 
-- **Frontend**: Next.js 16 + React 19 + TypeScript + Tailwind + shadcn/ui
-- **Backend**: FastAPI + Pydantic + docxtpl/python-docx + parsers de PDF/DOCX
-- **IA**: Google Gemini (`gemini-2.5-pro` por padrão)
-- **Banco/Auth**: Supabase (Auth + Postgres + RLS)
+- **Upload e adaptação** de currículos em PDF ou DOCX
+- **Extração inteligente** de dados com Google Gemini (`gemini-2.5-pro`)
+- **Geração de DOCX ATS-friendly** com templates profissionais
+- **Criação de currículo do zero** via formulário guiado em etapas
+- **Dashboard pessoal** para salvar e gerenciar currículos
+- **Autenticação segura** com Supabase Auth
+- **Isolamento de dados por usuário** via Row Level Security (RLS)
 
-### Estrutura de alto nível
+---
 
-- `frontend/`: app web (UI, autenticação, dashboard, upload/criação)
-- `backend/`: API de parse/extract/generate
-- `SUPABASE_SCHEMA.sql`: schema, policies RLS e triggers
-- `scripts/test-rls.ts`: validação de isolamento por usuário
-- `Templates/`: arquivos de exemplo
+## 🖥️ Demo do fluxo
+
+```
+Login → Dashboard → Upload de currículo (PDF/DOCX)
+                 → IA extrai e estrutura os dados
+                 → Usuário revisa e ajusta
+                 → Download do .docx ATS-friendly ✅
+
+              ou → Formulário passo a passo
+                 → Escolha de template
+                 → Download do .docx ATS-friendly ✅
+```
+
+---
+
+## 🧱 Stack
+
+| Camada     | Tecnologias                                              |
+|------------|----------------------------------------------------------|
+| Frontend   | Next.js 16, React 19, TypeScript, Tailwind CSS, shadcn/ui |
+| Backend    | FastAPI, Pydantic, python-docx / docxtpl                 |
+| IA         | Google Gemini API (`gemini-2.5-pro`)                     |
+| Auth / DB  | Supabase (Auth + PostgreSQL + Storage + RLS)             |
+
+---
+
+## 📁 Estrutura do projeto
+
+```
+devATS/
+├── frontend/           # App Next.js (UI, auth, dashboard)
+├── backend/            # API FastAPI (parse, extract, generate)
+├── SUPABASE_SCHEMA.sql # Schema, RLS policies e triggers
+├── scripts/
+│   └── test-rls.ts     # Validação de isolamento por usuário
+└── Templates/          # Exemplos de templates DOCX
+```
 
 ---
 
 ## ⚙️ Pré-requisitos
 
-- **Node.js** 20+
-- **npm** 10+
-- **Python** 3.11+ (recomendado)
-- Conta no **Supabase**
-- Chave de API do **Google Gemini**
+- Node.js 20+ e npm 10+
+- Python 3.11+
+- Conta no [Supabase](https://supabase.com)
+- Chave de API do [Google Gemini](https://aistudio.google.com)
 
 ---
 
-## 🚀 Configuração rápida (ambiente local)
+## 🚀 Instalação e configuração
 
-## 1) Clonar e instalar dependências
+### 1. Clonar o repositório
 
 ```bash
 git clone https://github.com/iSousadev/devATS.git
 cd devATS
+```
 
-# dependências do root (scripts utilitários)
+### 2. Instalar dependências
+
+```bash
+# Scripts utilitários da raiz
 npm install
 
-# frontend
-cd frontend
-npm install
-cd ..
+# Frontend
+cd frontend && npm install && cd ..
 
-# backend
+# Backend
 cd backend
 python -m venv .venv
-# Windows PowerShell:
+
+# Ativar venv:
+# Windows (PowerShell):
 .\.venv\Scripts\Activate.ps1
-# macOS/Linux:
+# macOS / Linux:
 # source .venv/bin/activate
+
 pip install -r requirements.txt
 cd ..
 ```
 
-## 2) Configurar variáveis de ambiente
+### 3. Configurar variáveis de ambiente
 
-### Root (`.env`) — usado pelo script de teste RLS
-
-Copie `.env.example` para `.env` e preencha:
+**Raiz — `.env`** (usado pelo script de teste RLS)
 
 ```dotenv
 SUPABASE_URL=
@@ -92,9 +113,7 @@ TEST_USER_B_EMAIL=
 TEST_USER_B_PASSWORD=
 ```
 
-### Backend (`backend/.env`)
-
-Copie `backend/.env.example` para `backend/.env` e preencha:
+**Backend — `backend/.env`**
 
 ```dotenv
 APP_ENV=development
@@ -109,9 +128,7 @@ GEMINI_MODEL=gemini-2.5-pro
 GEMINI_API_KEY=
 ```
 
-### Frontend (`frontend/.env.local`)
-
-Crie o arquivo `frontend/.env.local`:
+**Frontend — `frontend/.env.local`**
 
 ```dotenv
 NEXT_PUBLIC_API_URL=http://localhost:8000
@@ -119,231 +136,159 @@ NEXT_PUBLIC_SUPABASE_URL=
 NEXT_PUBLIC_SUPABASE_ANON_KEY=
 ```
 
----
+### 4. Configurar o Supabase
 
-## 🗄️ Configuração do Supabase
-
-1. Crie um projeto no Supabase.
-2. Execute o SQL de `SUPABASE_SCHEMA.sql` no SQL Editor.
-3. Verifique que as tabelas/políticas foram criadas:
-   - `public.profiles`
-   - `public.resumes`
+1. Crie um projeto em [supabase.com](https://supabase.com).
+2. Execute o conteúdo de `SUPABASE_SCHEMA.sql` no SQL Editor do painel.
+3. Confirme que foram criados:
+   - Tabelas `public.profiles` e `public.resumes`
    - RLS ativa com políticas por `auth.uid()`
-4. (Opcional) Crie 2 usuários de teste para rodar `test:rls`.
-
-### O que o schema já inclui
-
-- Tabelas `profiles` e `resumes`
-- Índices de performance
-- Trigger de `updated_at`
-- Bucket privado `resumes`
-- Policies de storage por pasta do usuário
+   - Bucket privado `resumes` com políticas de storage por pasta do usuário
 
 ---
 
-## ▶️ Como rodar o projeto
+## ▶️ Rodando localmente
 
-## Backend
+**Backend**
 
 ```bash
 cd backend
-# ative sua venv se necessário
 uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
-- Health check: `http://localhost:8000/health`
-- Docs Swagger: `http://localhost:8000/docs`
+- Health check: [http://localhost:8000/health](http://localhost:8000/health)  
+- Documentação Swagger: [http://localhost:8000/docs](http://localhost:8000/docs)
 
-## Frontend
+**Frontend**
 
 ```bash
 cd frontend
 npm run dev
 ```
 
-- App: `http://localhost:3000`
+- App: [http://localhost:3000](http://localhost:3000)
 
 ---
 
-## 🔌 API (Backend)
-
-Base URL local: `http://localhost:8000`
+## 🔌 API Reference
 
 ### `POST /api/parse`
 
-Recebe PDF ou DOCX (multipart), valida magic bytes e retorna texto extraído.
+Recebe um arquivo PDF ou DOCX (multipart/form-data), valida os magic bytes e retorna o texto extraído.
 
-- Limite: **5MB**
-- Suporta: PDF e DOCX
-
-Resposta (exemplo):
+- Tamanho máximo: **5 MB**
 
 ```json
+// Resposta
 {
   "success": true,
   "filename": "cv.pdf",
   "detected_type": "pdf",
   "text": "...",
-  "message": "Texto extraido com sucesso. Agora envie para a IA."
+  "message": "Texto extraído com sucesso."
 }
 ```
 
 ### `POST /api/extract`
 
-Extrai dados estruturados via Gemini a partir do texto bruto.
-
-Body:
+Envia o texto bruto para o Gemini e retorna os dados estruturados do currículo.
 
 ```json
-{
-  "text": "texto extraído do currículo"
-}
-```
+// Body
+{ "text": "texto extraído do currículo" }
 
-Retorno:
-
-```json
+// Resposta
 {
   "success": true,
-  "data": { "personal_info": {}, "experiences": [], "skills": {} },
-  "message": "Dados extraidos com sucesso. Revise antes de gerar o curriculo."
+  "data": {
+    "personal_info": {},
+    "experiences": [],
+    "skills": {}
+  },
+  "message": "Dados extraídos com sucesso. Revise antes de gerar."
 }
 ```
 
 ### `POST /api/generate`
 
-Gera DOCX final com base em `template_id` + dados do currículo.
-
-Aceita dois formatos:
-
-1. Formato normal:
+Gera o arquivo DOCX final a partir de um `template_id` e dos dados do currículo.
 
 ```json
+// Body
 {
   "template_id": "template-frontend-jr",
   "resume_data": { "...": "..." }
 }
 ```
 
-2. Envelope compatível com retorno do `/api/extract`:
+Retorno: stream do arquivo `.docx`.
 
-```json
-{
-  "template_id": "template-frontend-jr",
-  "success": true,
-  "data": { "...": "..." },
-  "message": "..."
-}
-```
-
-Retorno: stream de arquivo DOCX (`application/vnd.openxmlformats-officedocument.wordprocessingml.document`).
+> O endpoint também aceita o envelope retornado diretamente por `/api/extract`, sem necessidade de reformatar o payload.
 
 ---
 
-## 🧠 Como funciona a IA no projeto
+## 🧾 Templates disponíveis
 
-- A rota `/api/extract` usa `google-generativeai`.
-- O prompt força **fidelidade ao texto original** do currículo.
-- O backend normaliza saída para aderir ao schema Pydantic (`ResumeData`).
-- Erros comuns tratados:
-  - chave Gemini ausente/inválida
-  - quota/rate limit
-  - JSON inválido/truncado
-
----
-
-## 🧾 Templates DOCX
-
-Os templates ficam em `backend/app/templates/`.
-
-IDs atualmente presentes no projeto:
+Os templates ficam em `backend/app/templates/`. IDs disponíveis:
 
 - `template-frontend-jr`
 - `template-frontend`
 - `template-backend`
 
-Observação: o backend aceita `template_id` com ou sem sufixo `.docx`.
+O backend aceita o `template_id` com ou sem a extensão `.docx`.
 
 ---
 
-## 🖥️ Fluxo da aplicação (usuário)
+## 🧠 Como a IA funciona
 
-1. Usuário cria conta/login no frontend (Supabase Auth).
-2. Vai para o dashboard.
-3. Escolhe:
-   - **Adaptar currículo** (`/dashboard/upload`) ou
-   - **Criar do zero** (`/dashboard/create`)
-4. Gera DOCX final e faz download automático.
-5. Currículo pode ser salvo na tabela `resumes` para gestão posterior.
+A rota `/api/extract` usa a SDK `google-generativeai`. O prompt instrui o modelo a manter **fidelidade estrita ao conteúdo original** do currículo — sem inventar informações. A saída é normalizada e validada via Pydantic (`ResumeData`) antes de ser retornada. Casos de erro tratados incluem chave ausente/inválida, rate limit e JSON malformado ou truncado.
 
 ---
 
-## ✅ Testes utilitários
+## ✅ Testes
 
 ### Teste de RLS
 
-O script valida se um usuário não consegue inserir currículo com `user_id` de outro.
+Valida que um usuário autenticado não consegue inserir um currículo com o `user_id` de outro usuário.
 
 ```bash
 npm run test:rls
 ```
 
-Pré-condições:
-
-- `.env` da raiz configurado
-- dois usuários válidos no Supabase
-- schema/policies aplicados
+> Requer dois usuários cadastrados no Supabase e o `.env` da raiz configurado.
 
 ---
 
 ## 🛠️ Scripts disponíveis
 
-### Raiz
-
-- `npm run test:rls` — teste de políticas RLS
-
-### Frontend (`frontend/package.json`)
-
-- `npm run dev` — desenvolvimento
-- `npm run build` — build de produção
-- `npm run start` — start produção
-- `npm run lint` — lint
-
-### Backend
-
-- Sem script npm; execução via `uvicorn app.main:app --reload`
+| Contexto       | Comando                            | Descrição                  |
+|----------------|------------------------------------|----------------------------|
+| Raiz           | `npm run test:rls`                 | Teste de políticas RLS     |
+| Frontend       | `npm run dev`                      | Servidor de desenvolvimento|
+| Frontend       | `npm run build`                    | Build de produção          |
+| Frontend       | `npm run start`                    | Start em produção          |
+| Frontend       | `npm run lint`                     | Lint do código             |
+| Backend        | `uvicorn app.main:app --reload`    | Servidor de desenvolvimento|
 
 ---
 
 ## 🧯 Troubleshooting
 
-### Erro “Servico de IA nao configurado”
+| Sintoma | Solução |
+|---|---|
+| "Serviço de IA não configurado" | Verifique `GEMINI_API_KEY` em `backend/.env` |
+| Erros de CORS | Adicione a URL do frontend em `ALLOWED_ORIGINS` no `backend/.env` |
+| Falha no login/cadastro | Confirme `NEXT_PUBLIC_SUPABASE_URL` e `NEXT_PUBLIC_SUPABASE_ANON_KEY` |
+| Erro ao gerar DOCX | Verifique se o `template_id` existe e se o payload contém `personal_info` e `skills` |
+| PDF sem texto | PDFs baseados em imagem/scan não são suportados — o sistema retornará erro indicando ausência de texto extraível |
 
-- Verifique `GEMINI_API_KEY` em `backend/.env`.
+## 👤 Autor
 
-### CORS no frontend
-
-- Ajuste `ALLOWED_ORIGINS` no `backend/.env` para incluir a URL do frontend.
-
-### Falha no login/cadastro
-
-- Verifique `NEXT_PUBLIC_SUPABASE_URL` e `NEXT_PUBLIC_SUPABASE_ANON_KEY` em `frontend/.env.local`.
-
-### Erro ao gerar DOCX
-
-- Confirme se o `template_id` existe em `backend/app/templates/`.
-- Revise se o payload contém dados mínimos válidos (`personal_info`, `skills`, etc.).
-
-### PDF sem texto extraível
-
-- PDFs escaneados/imagem podem falhar no parse.
-- O sistema retorna erro indicando ausência de texto extraível.
-
-### Estado de BETA 
-v 0.1.0
+Desenvolvido por **[iSousadev](https://github.com/iSousadev)** como projeto pessoal.  
+Feedbacks e sugestões são bem-vindos via Issues ou PRs.
 
 ---
 
 ## 📄 Licença
 
-Defina a licença do projeto MIT
+Distribuído sob a licença **MIT**. Veja o arquivo `LICENSE` para mais detalhes.
