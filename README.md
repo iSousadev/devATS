@@ -346,4 +346,4 @@ v 0.1.0
 
 ## 📄 Licença
 
-Defina a licença do projeto (ex.: MIT) conforme sua preferência.
+Defina a licença do projeto MIT
