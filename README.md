@@ -1,4 +1,4 @@
-# DevATS Hacheando o Sistema
+# DevATS
 
 > Transforme currículos em documentos ATS-friendly com IA — em segundos.
 
@@ -30,6 +30,40 @@ Login → Dashboard → Upload de currículo (PDF/DOCX)
                  → Escolha de template
                  → Download do .docx ATS-friendly ✅
 ```
+
+---
+
+## 📸 Screenshots
+
+**Adaptar Currículo — Upload**  
+Arraste seu PDF ou DOCX e a IA extrai tudo automaticamente.
+
+<img width="1572" height="718" alt="image" src="https://github.com/user-attachments/assets/b9b2da45-d506-4213-bda5-0ff52e7c37ce" />
+
+
+---
+
+**Detalhes do Currículo Gerado**  
+Visualize todas as informações extraídas e estruturadas antes de gerar o arquivo.
+
+<img width="776" height="683" alt="image" src="https://github.com/user-attachments/assets/291c1b39-4127-45c9-ac1d-85a4cea4e8d0" />
+
+
+
+---
+
+**Criar do Zero — Etapa de Experiências**  
+Formulário guiado em múltiplas etapas para construir o currículo do zero.
+
+<img width="1200" height="771" alt="image" src="https://github.com/user-attachments/assets/c4ecd5b9-06f4-4eb7-bd26-21ad8bc2ab96" />
+
+---
+
+**Preview do Currículo Final**  
+Veja o resultado ATS-friendly antes de fazer o download.
+
+<img width="969" height="893" alt="image" src="https://github.com/user-attachments/assets/1a55dc5a-4f9a-42cb-8c42-43757b676cee" />
+
 
 ---
 
@@ -281,6 +315,7 @@ npm run test:rls
 | Falha no login/cadastro | Confirme `NEXT_PUBLIC_SUPABASE_URL` e `NEXT_PUBLIC_SUPABASE_ANON_KEY` |
 | Erro ao gerar DOCX | Verifique se o `template_id` existe e se o payload contém `personal_info` e `skills` |
 | PDF sem texto | PDFs baseados em imagem/scan não são suportados — o sistema retornará erro indicando ausência de texto extraível |
+---
 
 ## 👤 Autor
 
