@@ -35,6 +35,11 @@ Login → Dashboard → Upload de currículo (PDF/DOCX)
 
 ## 📸 Screenshots
 
+**Tela de Inicio**
+<img width="1894" height="899" alt="image" src="https://github.com/user-attachments/assets/1f2c1b9f-40a9-431f-8386-f2f54f2f7438" />
+
+
+
 **Adaptar Currículo — Upload**  
 Arraste seu PDF ou DOCX e a IA extrai tudo automaticamente.
 
